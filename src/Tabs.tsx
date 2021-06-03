@@ -7,6 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import { Button } from '@material-ui/core';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -87,6 +88,14 @@ export default function FullWidthTabs() {
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
           <Select/>
+          <hr></hr>
+            <Button id="getButton">Get</Button>
+          <hr></hr>
+          <div id="global">
+            <div id = "text">
+
+            </div>
+          </div>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           Item Two

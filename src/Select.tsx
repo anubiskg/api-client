@@ -1,4 +1,5 @@
 import React from 'react';
+import countries from "./countries";
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function ControlledOpenSelect() {
   const classes = useStyles();
-  const [country, setCountry] = React.useState<string | number>('');
+  const [country, setCountry] = React.useState<string>('');
   const [open, setOpen] = React.useState(false);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -38,9 +39,6 @@ export default function ControlledOpenSelect() {
 
   return (
     <div>
-      <Button className={classes.button} onClick={handleOpen}>
-        Select a country:*
-      </Button>
       <FormControl className={classes.formControl}>
         <InputLabel id="select-label">Country</InputLabel>
         <Select
@@ -54,11 +52,11 @@ export default function ControlledOpenSelect() {
           onChange={handleChange}
         >
           <MenuItem value="">
-            <em>None</em>
+            <em>Select any</em>
           </MenuItem>
-          <MenuItem value={"co"}>Colombia</MenuItem>
-          <MenuItem value={"us"}>United States</MenuItem>
-          <MenuItem value={"ca"}>Canada</MenuItem>
+          {
+            countries.countries.map((result:any) => (<option value = {result.code}>{result.name_en}</option>))
+          }
         </Select>
       </FormControl>
     </div>

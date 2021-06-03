@@ -10,7 +10,20 @@
   height: 40vmin;
   pointer-events: none;
 }
-
+#global{
+  height: 300px;
+	width: fixed;
+	border: 2px solid rgb(247, 248, 248);
+	background: #282c34;
+	overflow-y: scroll;
+}
+#text {
+	height: auto;
+}
+#getButton{
+  background: #282c34;
+  color:white;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
