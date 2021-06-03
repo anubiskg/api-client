@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  width: fixed;
   background-color: #282c34;
   align-items: center;
   justify-content: center;
@@ -11,7 +11,7 @@
   pointer-events: none;
 }
 #global{
-  height: 300px;
+  height: 500px;
 	width: fixed;
 	border: 2px solid rgb(247, 248, 248);
 	background: #282c34;
@@ -19,6 +19,8 @@
 }
 #text {
 	height: auto;
+  color:white;
+  text-align: left;
 }
 #getButton{
   background: #282c34;
@@ -31,6 +33,7 @@
 }
 
 .App-body {
+  text-align: center;
   background-color: #282c34;
   min-height: 100vh;
   display: flex;

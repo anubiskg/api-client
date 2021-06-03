@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from './Select';
+//import {prueba} from './Select';
+import axios from 'axios';
 import SwipeableViews from 'react-swipeable-views';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -8,6 +10,9 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { Button } from '@material-ui/core';
+import ReactJson from 'react-json-view';
+import { getSourceMapRange } from 'typescript';
+import ControlledOpenSelect from './Select';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -16,8 +21,9 @@ interface TabPanelProps {
   value: any;
 }
 
+
 function TabPanel(props: TabPanelProps) {
-  const { children, value, index} = props;
+  const { children, value, index } = props;
 
   return (
     <div
@@ -45,17 +51,46 @@ function a11yProps(index: any) {
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 500,
+    width: 900,
   },
 }));
 
 export default function FullWidthTabs() {
+  const baseUrl = "https://localhost:5001/api/newsweather/";
   const classes = useStyles();
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+  const [dataHistory, setDataHistory] = useState([]);
+  const [dataCheck, setDataCheck] = useState([]);
+
+  const peticionGetCheck = async () => {
+
+    await axios.get(baseUrl + {})
+      .then(response => {
+        setDataCheck(response.data);
+      }).catch(error => {
+        setDataCheck(error.data);
+      })
+  }
+  useEffect(() => {
+    peticionGetCheck();
+  }, [])
+
+  const peticionGetHistory = async () => {
+    await axios.get(baseUrl + "history")
+      .then(response => {
+        setDataHistory(response.data);
+      }).catch(error => {
+        setDataHistory(error.data);
+      })
+  }
+  useEffect(() => {
+    peticionGetHistory();
+  }, [])
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
+    peticionGetHistory();
   };
 
   const handleChangeIndex = (index: number) => {
@@ -66,8 +101,8 @@ export default function FullWidthTabs() {
     <div className={classes.root}>
       <AppBar position="static" color="default">
         <div>
-            <h6>CHECK THE NEWS AND WEATHER BY A SPECIFIED COUNTRY</h6>
-            <hr></hr>
+          <h6>CHECK THE NEWS AND WEATHER BY A SPECIFIED COUNTRY</h6>
+          <hr></hr>
         </div>
         <Tabs
           value={value}
@@ -87,18 +122,22 @@ export default function FullWidthTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <Select/>
+          <Select />
           <hr></hr>
-            <Button id="getButton">Get</Button>
+          <Button id="getButton" onClick={() => { peticionGetCheck() }}>Get</Button>
           <hr></hr>
           <div id="global">
-            <div id = "text">
-
+            <div id="text">
+              <ReactJson src={dataCheck} theme="monokai" />
             </div>
           </div>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Item Two
+          <div id="global">
+            <div id="text">
+              <ReactJson src={dataHistory} theme="monokai" collapsed={true} />
+            </div>
+          </div>
         </TabPanel>
       </SwipeableViews>
     </div>

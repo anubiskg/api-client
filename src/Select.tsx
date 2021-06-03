@@ -1,5 +1,5 @@
 import React from 'react';
-import countries from "./countries";
+import countries from "./countries.json";
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -20,11 +20,12 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+ var prueba: any = "Hola mundo";
+
 export default function ControlledOpenSelect() {
   const classes = useStyles();
   const [country, setCountry] = React.useState<string>('');
   const [open, setOpen] = React.useState(false);
-
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setCountry(event.target.value as string);
   };
@@ -55,7 +56,7 @@ export default function ControlledOpenSelect() {
             <em>Select any</em>
           </MenuItem>
           {
-            countries.countries.map((result:any) => (<option value = {result.code}>{result.name_en}</option>))
+            countries.countries.map((result: any) => (<option value={result.code}>{result.name_en}</option>))
           }
         </Select>
       </FormControl>
