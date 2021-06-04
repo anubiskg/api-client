@@ -47,13 +47,13 @@ function a11yProps(index: any) {
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 900,
+    width: 600,
   },
 }));
 
 export default function FullWidthTabs() {
 
-  const baseUrl = "https://localhost:44340/api/newsweather/history";
+  const baseUrl = "https://localhost:5001/api/newsweather/history";
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);

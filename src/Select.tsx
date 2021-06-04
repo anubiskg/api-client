@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState} from 'react';
 import countries from "./countries.json";
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function ControlledOpenSelect() {
 
   const classes = useStyles();
-  const baseUrl = "https://localhost:44340/api/newsweather/";
+  const baseUrl = "https://localhost:5001/api/newsweather/";
   const [country, setCountry] = React.useState<string>('');
   const [open, setOpen] = React.useState(false);
   const [dataCheck, setDataCheck] = useState([]);
@@ -41,9 +41,15 @@ export default function ControlledOpenSelect() {
         setDataCheck(error.data);
       })
   }
-  useEffect(() => {
-    peticionGetCheck();
-  }, [])
+
+  function validate(){
+    console.log(country);
+    if (country === undefined || country === ''){
+      alert("Select a country required");
+    }else{
+      peticionGetCheck();
+    }
+  }
 
   const handleClose = () => {
     setOpen(false);
@@ -64,11 +70,11 @@ export default function ControlledOpenSelect() {
           onClose={handleClose}
           onOpen={handleOpen}
           value={country}
-          required
           onChange={handleChange}
+          required={true}
         >
           <MenuItem>
-            <em>Select any</em>
+          <option>Select any</option>
           </MenuItem>
           {
             countries.countries.map((result: any) => (<option value={result.code}>{result.name_en}</option>))
@@ -76,11 +82,11 @@ export default function ControlledOpenSelect() {
         </Select>
       </FormControl>
       <hr></hr>
-          <Button id="getButton" onClick={() => { peticionGetCheck()}}>Get</Button>
+          <Button id="getButton" onClick={() => validate()}>Get</Button>
           <hr></hr>
           <div id="global">
             <div id="text">
-              <ReactJson src={dataCheck} theme="monokai"/>
+              <ReactJson src={dataCheck} theme="monokai" collapsed={true}/>
             </div>
           </div>
     </div>
