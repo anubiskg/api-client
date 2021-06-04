@@ -20,6 +20,7 @@
 #text {
 	height: auto;
   color:white;
+  width: fixed;
   text-align: left;
 }
 #getButton{
